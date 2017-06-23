@@ -62,23 +62,22 @@ def get_end(df,player,direction,links_only=False,transifempty=True):
     transaction = player_trans[dates.index(date)]
     return transaction
 
-def get_players(df,transaction,player):
+def get_players(df,transaction,player,teammates=False):
     players = []
-    team = get_team(df,transaction,player,'to')
+    if teammates == False:
+        direction = 'to'
+    else:
+        direction = 'from'
+    team = get_team(df,transaction,player,direction)
     for guy in df[df['id'] == transaction]['player']:
         team1 = get_team(df,transaction,guy,'to')
-        if guy != player and team1 != team:
-            players.append(guy)
+        if teammates = False:
+            if guy != player and team1 != team:
+                players.append(guy)
+        else:
+            if guy != player and team1 == team:
+                players.append(guy)
     return players
-
-def get_teammates(df,transaction,player):
-    teammates = []
-    team = get_team(df,transaction,player,'from')
-    for guy in df[df['id'] == transaction]['player']:
-        team1 = get_team(df,transaction,guy,'from')
-        if guy != player and team1 == team:
-            teammates.append(guy)
-    return teammates
 
 def find_closest(df,current,player,links_only,direction):
 
@@ -140,7 +139,7 @@ def make_node(df,transaction,player,direction):
             'date'          : get_info(df,transaction,'date'),
             'player'        : player,
             'traded_for'    : get_players(df,transaction,player),
-            'traded_with'   : get_teammates(df,transaction,player),
+            'traded_with'   : get_players(df,transaction,player,teammates=True),
             'from_team'     : get_team(df,transaction,player,direction='from'),
             'to_team'       : get_team(df,transaction,player,direction='to')
             }

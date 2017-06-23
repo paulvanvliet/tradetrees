@@ -1,17 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 29 15:35:24 2017
-
-@author: RNPMV01
-"""
 
 import pandas as pd
 import treefunctions
 import networkx as nx
-#from networkx.drawing.nx_agraph import graphviz_layout
-#from networkx.drawing.nx_pydot import pydot_layout
-#import pylab as plt
-#import pydot
 
 # "C:/ML/Baseball/Data/tran.txt"
 # "C:/ML/Baseball/Data/retro_ids.txt"
@@ -97,11 +87,12 @@ class TradeTree():
             transaction = treefunctions.get_end(self.df,player,direction,links_only=True)
         path = treefunctions.traverse(self.df,transaction,player,direction)
         self.path = path
+        self.direction = direction
 
     def draw_path(self):
-        nodes,edges = treefunctions.nodes_and_edges(self.path)
+        nodes,edges = treefunctions.nodes_and_edges(self.df,self.path,self.direction)
         G = nx.DiGraph()
-        G.add_edges_from(edges)
-        #nx.draw(G,pos=pydot_layout(G)) # This prompts graphviz executables not found
-        nx.draw_networkx(G)
-        plt.savefig('test.png',dpi=600)
+        G.add_edges_from(edges,color='black')
+        A = nx.nx_agraph.to_agraph(G)
+        A.layout('dot')
+        A.draw('test.png')
