@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 29 16:01:44 2017
-
-@author: RNPMV01
-"""
 
 def is_link(df,transaction):
     if df[df['id'] == transaction]['type'].iloc[0] == 'T ':
