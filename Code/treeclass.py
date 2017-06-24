@@ -3,9 +3,6 @@ import pandas as pd
 import treefunctions
 import networkx as nx
 
-# "C:/ML/Baseball/Data/tran.txt"
-# "C:/ML/Baseball/Data/retro_ids.txt"
-
 class TradeTree():
 
     def __init__(self,data_path,id_path):
